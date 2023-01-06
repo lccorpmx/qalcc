@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         <div className='flex justify-center items-center bg-primary p-5 rounded-b-3xl'>
           <section className='flex flex-col items-center w-full'>
             <div className='flex flex-col justify-center items-center'>
-              <h2 className='font-bold text-white text-4xl'>¡HOLA!</h2>
+              <h2 className='font-bold text-white text-4xl'>LCC DICE</h2>
               <div className='border-2  inline-block mb-2 w-3/4' />
             </div>
 
