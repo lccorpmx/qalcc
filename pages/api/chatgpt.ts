@@ -15,7 +15,7 @@ export default async function handler(
     model: "text-davinci-003",
     prompt: `${req.body.prompt}\n\n-`,
     temperature: 0,
-    max_tokens: 1000,
+    max_tokens: 2500,
     top_p: 1,
     stop: ["\n"],
   });
