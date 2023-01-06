@@ -1,8 +1,26 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
 import { AiOutlineSend } from "react-icons/ai"
 
 const Home: NextPage = () => {
+  const [prompt, setPrompt] = useState('')
+  const [data, setData] = useState('')
+
+  const handleClick = async () => {
+    const res = await fetch('/api/chatgpt', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+      }),
+    })
+
+    const data = await res.json()
+    setData(data.response)
+  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <Head>
@@ -20,17 +38,25 @@ const Home: NextPage = () => {
             </div>
 
             <div className="flex item-center justify-center shadow-xl bg-white w-full rounded-full overflow-hidden">
-              <input type="text" className='w-full placeholder:text-[#b8b8b8] font-bold px-4 py-3 outline-none' placeholder='¿A que sabe zkittles?' />
-              <div className='grid place-content-center px-3'>
+              <input
+                onChange={(e) => setPrompt(e.target.value)}
+                type={'text'}
+                name={'prompt'}
+                className='w-full placeholder:text-[#b8b8b8] font-bold px-4 py-3 outline-none'
+                placeholder='¿A que sabe zkittles?' />
+              <button
+                onClick={handleClick}
+                className='grid place-content-center px-3'
+              >
                 <AiOutlineSend className='w-7 h-7 text-[#b8b8b8]' />
-              </div>
+              </button>
             </div>
           </section>
         </div>
         {/*Answer Section*/}
-        <div className=''>
+        <div>
           <section className='font-semibold p-6'>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni quasi recusandae necessitatibus adipisci eum aperiam, odit consequuntur enim molestiae fugiat veritatis praesentium eius aspernatur minus, aliquam rerum laborum, doloremque vero fugit accusantium inventore! Natus quas placeat exercitationem, voluptas aperiam sapiente deserunt itaque ipsam vel tenetur voluptatem est eaque distinctio aut ut beatae consequuntur? Sint veritatis cupiditate reprehenderit labore impedit tenetur voluptates, voluptatem dicta in vel perferendis at, expedita corrupti eius beatae placeat totam et nemo ratione ullam. Quis, eligendi hic.</p>
+            <p>{data ? <p className='font-bold'>LCC DICE: <p className='font-medium'>{data}</p></p> : ''}</p>
           </section>
         </div>
       </main>
