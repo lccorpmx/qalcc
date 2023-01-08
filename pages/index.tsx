@@ -2,12 +2,15 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 import { AiOutlineSend } from "react-icons/ai"
+import Loading from '../components/loading'
 
 const Home: NextPage = () => {
+  const [loading, setLoading] = useState(false)
   const [prompt, setPrompt] = useState('')
   const [data, setData] = useState('')
 
   const handleClick = async () => {
+    setLoading(true)
     const res = await fetch('/api/chatgpt', {
       method: 'POST',
       headers: {
@@ -18,15 +21,26 @@ const Home: NextPage = () => {
       }),
     })
 
+    if (res.status !== 200) {
+      setLoading(false)
+      return
+    }
+
     const data = await res.json()
     setData(data.response)
+    setLoading(false)
   }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <Head>
         <title>QA LCC</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <div className={`absolute ${loading ? 'grid place-content-center inset-0 opacity-100' : 'opacity-0'} transition-all duration-300`}>
+        <Loading className={`${loading ? 'w-16 h-16 md:w-18 md:h-18' : ''}`} />
+      </div>
 
       <main className="flex w-full flex-1 flex-col bg-white">
         {/*Question Section*/}
