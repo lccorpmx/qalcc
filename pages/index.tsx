@@ -70,7 +70,7 @@ const Home: NextPage = () => {
         {/*Answer Section*/}
         <div>
           <section className='font-semibold p-6'>
-            <p>{data ? <p className='font-bold'>LCC DICE: <p className='font-medium'>{data}</p></p> : ''}</p>
+            {data ? <p className='font-bold'>LCC DICE: <span className='font-medium'>{data}</span></p> : ''}
           </section>
         </div>
       </main>
